@@ -1,11 +1,836 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PakePlus</title>
-    </head>
-    <body>
-        PakePlus
-    </body>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>牛马觉醒 · 拒绝内耗</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .card {
+            max-width: 520px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 32px;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.06), 0 4px 10px rgba(0, 0, 0, 0.03);
+            padding: 20px 18px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .title-section i {
+            font-size: 24px;
+            color: #b45f06;
+            background: #fce8cd;
+            padding: 6px;
+            border-radius: 16px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #2c3e50;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-day {
+            background: #e9eef4;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .badge-day i {
+            color: #f39c12;
+            font-size: 0.9rem;
+        }
+
+        .settings-icon {
+            background: #eef3fa;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .settings-icon:hover {
+            background: #d9e2ef;
+        }
+
+        .date-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0 14px;
+            color: #5e6f8c;
+            font-weight: 500;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #d4dce8;
+        }
+
+        .today {
+            background: #dfe7f5;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+
+        .total-box {
+            background: #2c3e50;
+            color: white;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 8px rgba(44,62,80,0.12);
+        }
+
+        .total-box i {
+            margin-right: 4px;
+            color: #f1c40f;
+        }
+
+        .quote-section {
+            background: #fafcff;
+            border-radius: 24px;
+            padding: 16px 14px;
+            margin: 10px 0 8px;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.01), 0 6px 14px -6px rgba(33,43,54,0.08);
+            border: 1px solid #ffffff;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            font-weight: 600;
+            color: #1e2b3a;
+            letter-spacing: 0.2px;
+            font-size: 0.95rem;
+        }
+
+        .principles {
+            list-style: none;
+        }
+
+        .principle-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 4px;
+            border-bottom: 1px solid #e6ecf3;
+        }
+
+        .principle-item:last-child {
+            border-bottom: none;
+        }
+
+        .principle-icon {
+            width: 28px;
+            height: 28px;
+            background: #eef3fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c5282;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .principle-content {
+            flex: 1;
+            font-size: 0.88rem;
+            color: #1e293b;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .motto-badge {
+            background: #fff1df;
+            border-radius: 24px;
+            padding: 5px 12px;
+            margin-top: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #92400e;
+            display: inline-block;
+            border-left: 4px solid #d97706;
+        }
+
+        .checkin-panel {
+            background: linear-gradient(145deg, #ffffff 0%, #f7faff 100%);
+            border-radius: 24px;
+            padding: 16px 16px 12px;
+            margin-top: 0;
+            box-shadow: 0 8px 16px -5px rgba(28, 52, 84, 0.06);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .btn-checkin {
+            width: 100%;
+            background: #1e293b;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 14px 10px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 14px -6px rgba(15, 23, 42, 0.18);
+            transition: all 0.15s;
+            border: 1px solid #334155;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .btn-checkin i {
+            font-size: 1.2rem;
+        }
+
+        .btn-checkin:active {
+            transform: scale(0.98);
+            box-shadow: 0 5px 8px -3px rgba(0,0,0,0.2);
+        }
+
+        .btn-checkin:disabled {
+            background: #1e293b;
+            box-shadow: none;
+            border-color: #334155;
+            opacity: 1;
+            color: #10b981;
+        }
+
+        .btn-checkin:disabled i {
+            color: #10b981;
+        }
+
+        .total-days-info {
+            text-align: center;
+            color: #475569;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .total-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1;
+            margin-right: 2px;
+        }
+
+        .streak-label-small {
+            font-size: 0.7rem;
+            background: #eef2f6;
+            padding: 2px 10px;
+            border-radius: 30px;
+        }
+
+        .footer-note {
+            margin-top: 16px;
+            color: #62748c;
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px dashed #cdd9e9;
+            padding-top: 14px;
+        }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(3px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 32px;
+            padding: 22px 18px;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.2);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            margin: 15px 0;
+        }
+
+        .cal-day-header {
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #64748b;
+            padding: 6px 0;
+        }
+
+        .cal-cell {
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .cal-cell.checked {
+            background: #10b981;
+            color: white;
+        }
+
+        .cal-cell.today {
+            border: 2px solid #3b82f6;
+        }
+
+        .month-selector {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .month-btn {
+            background: #eef2f6;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .reset-btn-modal {
+            background: #fee2e2;
+            border: none;
+            color: #b91c1c;
+            padding: 12px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 18px;
+            cursor: pointer;
+        }
+
+        .confirm-panel {
+            text-align: center;
+            padding: 20px 0 10px;
+        }
+        .confirm-icon {
+            font-size: 48px;
+            color: #ef4444;
+            margin-bottom: 16px;
+        }
+        .confirm-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        .confirm-desc {
+            color: #64748b;
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+        }
+        .confirm-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .confirm-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-cancel {
+            background: #eef2f6;
+            color: #334155;
+        }
+        .btn-confirm {
+            background: #ef4444;
+            color: white;
+        }
+
+        .calendar-view, .confirm-view {
+            transition: opacity 0.2s;
+        }
+        .hidden {
+            display: none !important;
+        }
+
+        .refresh-quote-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-left: auto;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+        .refresh-quote-btn:hover {
+            background: #eef2f6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <div class="title-section">
+            <i class="fas fa-horse-head"></i>
+            <h1>牛马·觉醒</h1>
+        </div>
+        <div class="header-right">
+            <div class="badge-day">
+                <i class="far fa-calendar-check"></i>
+                <span id="displayDate"></span>
+            </div>
+            <div class="settings-icon" id="settingsBtn">
+                <i class="fas fa-cog"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="date-row">
+        <span class="today"><i class="far fa-clock"></i> <span id="greetingHint">早上好，阅读提醒</span></span>
+        <span class="total-box"><i class="fas fa-calendar-alt"></i> 累计 <span id="totalDaysDisplay">0</span> 天</span>
+    </div>
+
+    <div class="quote-section">
+        <div class="section-label">
+            <span>🌅 每天一遍 · 拒绝内耗</span>
+            <button class="refresh-quote-btn" id="refreshQuotesBtn" title="换一批"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <!-- 动态语录列表 -->
+        <ul class="principles" id="quotesList"></ul>
+        <div class="motto-badge"> 牛马三原则 · 不讨论私事 · 不八卦同事 · 不吐槽领导</div>
+    </div>
+
+    <div class="checkin-panel">
+        <button class="btn-checkin" id="checkinBtn"><i class="fas fa-check-double"></i> 我今日做到了</button>
+        <div class="total-days-info">
+            <div><span class="total-number" id="streakDaysLarge">0</span> <span style="font-size: 0.8rem;">天</span></div>
+            <div class="streak-label-small"><i class="fas fa-fire" style="color: #f97316; margin-right: 3px;"></i>连续打卡</div>
+        </div>
+    </div>
+
+    <div class="footer-note"><i class="far fa-smile"></i> 上班而已 · 别太上头 · 演好角色 · 保命要紧</div>
+</div>
+
+<!-- 设置弹窗 -->
+<div class="modal-overlay" id="settingsModal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3 id="modalTitle"><i class="fas fa-calendar-alt" style="margin-right: 8px;"></i>打卡记录</h3>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        <div id="calendarView" class="calendar-view">
+            <div class="month-selector">
+                <button class="month-btn" id="prevMonthBtn"><i class="fas fa-chevron-left"></i></button>
+                <span id="currentMonthDisplay" style="font-weight: 600;">2026年4月</span>
+                <button class="month-btn" id="nextMonthBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div style="display: flex; justify-content: space-around; margin: 8px 0 16px;">
+                <span><i class="fas fa-circle" style="color: #10b981; font-size: 0.7rem;"></i> 已打卡</span>
+                <span><i class="far fa-circle" style="color: #94a3b8;"></i> 未打卡</span>
+            </div>
+            <button class="reset-btn-modal" id="showConfirmBtn"><i class="fas fa-trash-alt"></i> 重置所有打卡数据</button>
+            <p style="font-size: 0.7rem; color: #94a3b8; margin-top: 10px; text-align: center;">点击日期可查看详情 (仅展示)</p>
+        </div>
+        <div id="confirmView" class="confirm-view hidden">
+            <div class="confirm-panel">
+                <div class="confirm-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="confirm-title">确认重置</div>
+                <div class="confirm-desc">所有打卡记录将被清空，累计与连续天数归零。<br>此操作无法撤销。</div>
+                <div class="confirm-actions">
+                    <button class="confirm-btn btn-cancel" id="cancelResetBtn">取消</button>
+                    <button class="confirm-btn btn-confirm" id="confirmResetBtn">确认重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function(){
+        "use strict";
+
+        // ---------- 50条拒绝内耗语录 ----------
+        const QUOTES = [
+            "工作上最大的事、都是小事；自己的小事再小、也是大事。",
+            "上班是为了什么，上班是为了更好的生活。",
+            "工作是公司的，身体是自己的，千万别搞反了。",
+            "允许一切发生，允许领导发疯，允许同事甩锅，但绝不允许自己生气。",
+            "工资里包含了委屈费，但也仅限上班时间，下班自动续费请另付。",
+            "别把公司当家，公司不养闲人，你也别养闲气。",
+            "地球离了谁都转，公司离了你照转，但你离了健康，家就转不动了。",
+            "责任心要有，但不能过剩；过了就叫内耗，伤身又伤心。",
+            "遇到烂人烂事，默念三字真言：没必要，不至于，算了。",
+            "领导的评价听听就好，那只是他的管理手段，不是你的定义。",
+            "上班就是演戏，同事是搭戏的，别入戏太深，散了场就各回各家。",
+            "可以认真，但别较真；可以努力，但别卖命。",
+            "学会精神离职，把身体带到工位，把情绪留给生活。",
+            "今天再大的事，到了明天都是故事；今年再大的坎，到了明年都是经历。",
+            "工作是干不完的，命是自己的，留点精力给下班后的晚霞。",
+            "不要因为工作，忽视了身边爱你的人，那才是你真正的绩优股。",
+            "把时间分给睡眠、书籍、运动，分给山川湖海，而不是分给焦虑和内耗。",
+            "别人的评价是别人的课题，你不需要为别人的情绪买单。",
+            "工作是手段，生活才是目的，别在谋生的地方寻找意义。",
+            "请记住：压垮你的从来不是工作，而是你那颗太想把工作做好的心。",
+            "准时下班，是对自己最基本的尊重。",
+            "你不是救世主，公司的问题不需要你透支健康去解决。",
+            "下班后，工作消息自动屏蔽，天塌了也有老板顶着。",
+            "别用战术上的勤奋，掩盖战略上的懒惰，更别用加班感动自己。",
+            "打工而已，别太入戏，主角永远不是你。",
+            "和同事保持边界感，是对彼此最大的善意。",
+            "不要因为怕犯错而焦虑，犯错是公司的成本，不是你的罪过。",
+            "工作中受的委屈，要在下班前消化，绝不过夜。",
+            "工资买的是你的时间和技能，不是你的情绪和健康。",
+            "学会拒绝，份外之事勇敢说不，你的时间很贵。",
+            "别把工作带回家，家门是结界，进门就是生活。",
+            "领导的饼，听听就好，别当真，当真你就输了。",
+            "与其内耗自己，不如指责他人（心理上）。",
+            "别拿身体换业绩，业绩是老板的，身体是你的。",
+            "工作的本质是交易，一手交钱，一手交货（劳动力）。",
+            "责任心适度是优点，过度是缺陷。",
+            "做好分内事，其他的关我屁事。",
+            "下班后的你，才是真正的你，好好享受。",
+            "不必讨好任何人，你的价值不由同事的评价决定。",
+            "工作是做不完的，但生活是过一天少一天的。",
+            "放下助人情结，尊重他人命运，也包括同事的命运。",
+            "减少精神内耗，从关闭工作群消息提醒开始。",
+            "办公室只有同事，没有朋友，别什么都说。",
+            "如果工作让你痛苦，要么忍，要么滚，就是别纠结。",
+            "别把情绪浪费在无法改变的事情上，比如老板的脾气。",
+            "任何消耗你的人和事，多看一眼都是你的不对。",
+            "打工人的顶级自律：准点下班，到点吃饭，按时睡觉。",
+            "你的努力，要放在提升自己，而不是感动公司。",
+            "少操心，多睡觉，工作只是人生的一小部分。",
+            "做一个没有感情的打工机器，下班就断电。"
+        ];
+
+        // 随机选取 n 条 (不重复)
+        function getRandomQuotes(count = 5) {
+            const shuffled = [...QUOTES];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled.slice(0, count);
+        }
+
+        // 渲染语录列表
+        function renderQuotes() {
+            const quotesList = document.getElementById('quotesList');
+            const selected = getRandomQuotes(5);
+            let html = '';
+            selected.forEach((text, index) => {
+                const icons = ['①', '②', '③', '④', '⑤'];
+                html += `<li class="principle-item">
+                    <div class="principle-icon">${icons[index]}</div>
+                    <div class="principle-content">${text}</div>
+                </li>`;
+            });
+            quotesList.innerHTML = html;
+        }
+
+        // ---------- 打卡逻辑 ----------
+        const STORAGE_CHECKINS = 'niuma_checkins_array';
+
+        function getTodayString() {
+            const d = new Date();
+            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        }
+
+        function getGreetingByHour() {
+            const hour = new Date().getHours();
+            if (hour >= 5 && hour < 12) return ' 早上好，清醒阅读';
+            if (hour >= 12 && hour < 18) return ' 下午好，保持边界';
+            return ' 晚上好，准备打卡反思';
+        }
+
+        function loadCheckins() {
+            const stored = localStorage.getItem(STORAGE_CHECKINS);
+            if (stored) {
+                try { return JSON.parse(stored); } catch(e){ return []; }
+            }
+            return [];
+        }
+
+        function saveCheckins(arr) {
+            localStorage.setItem(STORAGE_CHECKINS, JSON.stringify(arr));
+        }
+
+        function calcStreak(checkinsSet) {
+            let streak = 0;
+            let current = new Date();
+            while (true) {
+                const y = current.getFullYear();
+                const m = String(current.getMonth()+1).padStart(2,'0');
+                const d = String(current.getDate()).padStart(2,'0');
+                const dateStr = `${y}-${m}-${d}`;
+                if (checkinsSet.has(dateStr)) {
+                    streak++;
+                    current.setDate(current.getDate() - 1);
+                } else break;
+            }
+            return streak;
+        }
+
+        const displayDateSpan = document.getElementById('displayDate');
+        const greetingHintSpan = document.getElementById('greetingHint');
+        const totalDaysDisplay = document.getElementById('totalDaysDisplay');
+        const streakDaysLarge = document.getElementById('streakDaysLarge');
+        const checkinBtn = document.getElementById('checkinBtn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const modalOverlay = document.getElementById('settingsModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const prevMonthBtn = document.getElementById('prevMonthBtn');
+        const nextMonthBtn = document.getElementById('nextMonthBtn');
+        const currentMonthDisplay = document.getElementById('currentMonthDisplay');
+        const calendarGrid = document.getElementById('calendarGrid');
+        const showConfirmBtn = document.getElementById('showConfirmBtn');
+        const calendarView = document.getElementById('calendarView');
+        const confirmView = document.getElementById('confirmView');
+        const cancelResetBtn = document.getElementById('cancelResetBtn');
+        const confirmResetBtn = document.getElementById('confirmResetBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const refreshQuotesBtn = document.getElementById('refreshQuotesBtn');
+
+        let checkinsSet = new Set(loadCheckins());
+        let currentDisplayDate = new Date();
+
+        function updateMainUI() {
+            const todayStr = getTodayString();
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth()+1).padStart(2,'0');
+            const day = String(now.getDate()).padStart(2,'0');
+            const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+            displayDateSpan.textContent = `${year}.${month}.${day} ${weekdays[now.getDay()]}`;
+            greetingHintSpan.textContent = getGreetingByHour();
+
+            totalDaysDisplay.textContent = checkinsSet.size;
+            streakDaysLarge.textContent = calcStreak(checkinsSet);
+
+            const isCheckedToday = checkinsSet.has(todayStr);
+            if (isCheckedToday) {
+                checkinBtn.disabled = true;
+                checkinBtn.innerHTML = `<i class="fas fa-check-circle"></i> 今日已完成 · 明日继续`;
+            } else {
+                checkinBtn.disabled = false;
+                checkinBtn.innerHTML = `<i class="fas fa-check-double"></i> 我今日做到了`;
+            }
+        }
+
+        function handleCheckin() {
+            const todayStr = getTodayString();
+            if (checkinsSet.has(todayStr)) {
+                alert('今日已打卡，明天再来吧');
+                return;
+            }
+            checkinsSet.add(todayStr);
+            saveCheckins(Array.from(checkinsSet));
+            updateMainUI();
+            checkinBtn.innerHTML = `<i class="fas fa-check"></i> 打卡成功！ +1`;
+            setTimeout(() => updateMainUI(), 800);
+        }
+
+        function renderCalendar() {
+            const year = currentDisplayDate.getFullYear();
+            const month = currentDisplayDate.getMonth();
+            const firstDay = new Date(year, month, 1);
+            const startDayOfWeek = firstDay.getDay();
+            const daysInMonth = new Date(year, month+1, 0).getDate();
+            currentMonthDisplay.textContent = `${year}年 ${String(month+1).padStart(2,'0')}月`;
+
+            const weekHeader = ['日','一','二','三','四','五','六'];
+            let html = '';
+            weekHeader.forEach(d => { html += `<div class="cal-day-header">${d}</div>`; });
+
+            let cellCount = 0;
+            for (let i=0; i<startDayOfWeek; i++) {
+                html += `<div class="cal-cell" style="background:transparent;"></div>`;
+                cellCount++;
+            }
+            const todayStr = getTodayString();
+            for (let d=1; d<=daysInMonth; d++) {
+                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const isChecked = checkinsSet.has(dateStr);
+                const isToday = (dateStr === todayStr);
+                let cls = 'cal-cell';
+                if (isChecked) cls += ' checked';
+                if (isToday) cls += ' today';
+                html += `<div class="${cls}">${d}</div>`;
+                cellCount++;
+            }
+            const remaining = (7 - (cellCount % 7)) % 7;
+            for (let i=0; i<remaining; i++) {
+                html += `<div class="cal-cell" style="background:transparent;"></div>`;
+            }
+            calendarGrid.innerHTML = html;
+        }
+
+        function openModal() {
+            currentDisplayDate = new Date();
+            renderCalendar();
+            calendarView.classList.remove('hidden');
+            confirmView.classList.add('hidden');
+            modalTitle.innerHTML = `<i class="fas fa-calendar-alt" style="margin-right: 8px;"></i>打卡记录`;
+            modalOverlay.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modalOverlay.style.display = 'none';
+        }
+
+        function showConfirmPanel() {
+            calendarView.classList.add('hidden');
+            confirmView.classList.remove('hidden');
+            modalTitle.innerHTML = `<i class="fas fa-exclamation-circle" style="margin-right: 8px; color:#ef4444;"></i>危险操作`;
+        }
+
+        function hideConfirmPanel() {
+            calendarView.classList.remove('hidden');
+            confirmView.classList.add('hidden');
+            modalTitle.innerHTML = `<i class="fas fa-calendar-alt" style="margin-right: 8px;"></i>打卡记录`;
+        }
+
+        function performReset() {
+            checkinsSet.clear();
+            saveCheckins([]);
+            updateMainUI();
+            renderCalendar();
+            hideConfirmPanel();
+            closeModal();
+        }
+
+        function changeMonth(delta) {
+            currentDisplayDate.setMonth(currentDisplayDate.getMonth() + delta);
+            renderCalendar();
+        }
+
+        function init() {
+            renderQuotes();  // 每次打开页面都会自动随机刷新5条
+            updateMainUI();
+
+            checkinBtn.addEventListener('click', handleCheckin);
+            settingsBtn.addEventListener('click', openModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+            prevMonthBtn.addEventListener('click', () => changeMonth(-1));
+            nextMonthBtn.addEventListener('click', () => changeMonth(1));
+            showConfirmBtn.addEventListener('click', showConfirmPanel);
+            cancelResetBtn.addEventListener('click', hideConfirmPanel);
+            confirmResetBtn.addEventListener('click', performReset);
+            
+            refreshQuotesBtn.addEventListener('click', renderQuotes);
+
+            setInterval(() => updateMainUI(), 60000);
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) updateMainUI();
+            });
+        }
+
+        init();
+    })();
+</script>
+</body>
 </html>
